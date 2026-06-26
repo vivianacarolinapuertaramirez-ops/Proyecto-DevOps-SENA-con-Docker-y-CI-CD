@@ -14,7 +14,9 @@ services:
       - backend
     networks:
       - red-devops
-
 networks:
   red-devops:
-    driver: bridge
+    driver: bridge      
+
+
+                                                                                                                                                                                                                                                            
