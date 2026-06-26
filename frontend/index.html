@@ -11,19 +11,23 @@
         <h1>✅ Proyecto DevOps con Contenedores</h1>
         <p>Formación: DevOps y Contenedores - SENA</p>
         <div class="caja-respuesta">
-            <h3>Estado del sistema:</h3>
+            <h3>Respuesta del Backend:</h3>
             <p id="mensaje">Cargando conexión con el servidor...</p>
         </div>
     </div>
 
     <script>
         fetch("http://localhost:5000/api/mensaje")
-            .then(respuesta => respuesta.json())
+            .then(respuesta => {
+                if (!respuesta.ok) throw new Error("Sin respuesta del servidor");
+                return respuesta.json();
+            })
             .then(datos => {
                 document.getElementById("mensaje").textContent = datos.mensaje;
             })
             .catch(error => {
                 document.getElementById("mensaje").textContent = "❌ Error: No se pudo conectar con el backend";
+                console.error(error);
             });
     </script>
 </body>
