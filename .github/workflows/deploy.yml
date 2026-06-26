@@ -1,0 +1,23 @@
+name: Pipeline DevOps SENA
+on: [push, pull_request]
+
+jobs:
+  validar-y-construir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener código del repositorio
+        uses: actions/checkout@v4
+
+      - name: Verificar configuración de Docker Compose
+        run: docker compose config
+
+      - name: Construir imágenes Docker
+        run: docker compose build --no-cache
+
+      - name: Probar que los servicios funcionen
+        run: |
+          docker compose up -d
+          sleep 10
+          curl --fail http://localhost:5000/api/mensaje
+          curl --fail http://localhost:8080
+          docker compose down

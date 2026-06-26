@@ -1,0 +1,25 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+    networks:
+      - red-devops
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - red-devops
+
+networks:
+  red-devops:
+    driver: bridge
+
+volumes:
+  datos-backend:
