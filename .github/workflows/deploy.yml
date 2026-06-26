@@ -6,31 +6,34 @@ on:
     branches: [ main ]
 
 jobs:
-  validar-y-construir:
-    name: Verificar y desplegar
+  prueba-y-validacion:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Obtener código del repositorio
+      - name: Obtener el código del repositorio
         uses: actions/checkout@v4
+
+      - name: Instalar Docker Compose
+        run: |
+          sudo apt update
+          sudo apt install -y docker-compose-plugin
 
       - name: Validar configuración de Docker Compose
         run: docker compose config
 
-      - name: Construir imágenes de contenedores
+      - name: Construir imágenes
         run: docker compose build --no-cache
 
-      - name: Levantar servicios para prueba
+      - name: Levantar los servicios
         run: docker compose up -d
 
-      - name: Esperar inicio de servicios
-        run: sleep 12
+      - name: Esperar que arranquen
+        run: sleep 15
 
-      - name: Probar conexión con Backend
+      - name: Probar que el backend responda
         run: curl --fail http://localhost:5000/api/mensaje
 
-      - name: Probar acceso al Frontend
+      - name: Probar que el frontend cargue
         run: curl --fail http://localhost:8080
 
-      - name: Detener y limpiar contenedores
+      - name: Limpiar contenedores
         run: docker compose down
