@@ -7,8 +7,8 @@ CORS(app)
 @app.route("/api/mensaje", methods=["GET"])
 def obtener_mensaje():
     return jsonify({
-        "mensaje": "✅ Conexión exitosa desde el Backend Flask! Todo funciona con Docker y DevOps."
+        "mensaje": "✅ Conexión exitosa! Backend Flask funcionando en contenedor Docker. Proyecto DevOps SENA completado."
     })
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=False)

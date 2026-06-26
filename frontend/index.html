@@ -8,11 +8,11 @@
 </head>
 <body>
     <div class="contenedor">
-        <h1>✅ Proyecto DevOps en Contenedores</h1>
-        <p>Aplicación desplegada con Docker y automatización CI/CD</p>
+        <h1>✅ Proyecto DevOps con Contenedores</h1>
+        <p>Formación: DevOps y Contenedores - SENA</p>
         <div class="caja-respuesta">
-            <h3>Respuesta del Backend:</h3>
-            <p id="mensaje">Cargando conexión...</p>
+            <h3>Estado del sistema:</h3>
+            <p id="mensaje">Cargando conexión con el servidor...</p>
         </div>
     </div>
 
@@ -23,8 +23,7 @@
                 document.getElementById("mensaje").textContent = datos.mensaje;
             })
             .catch(error => {
-                document.getElementById("mensaje").textContent = "❌ Error al conectar con el servidor";
-                console.error(error);
+                document.getElementById("mensaje").textContent = "❌ Error: No se pudo conectar con el backend";
             });
     </script>
 </body>
