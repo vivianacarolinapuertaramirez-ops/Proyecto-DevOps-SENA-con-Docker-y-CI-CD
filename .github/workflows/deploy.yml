@@ -6,34 +6,34 @@ on:
     branches: [ main ]
 
 jobs:
-  prueba-y-validacion:
-    runs-on: ubuntu-latest
+  validar-proyecto:
+    runs-on: ubuntu-22.04
     steps:
-      - name: Obtener el código del repositorio
+      - name: Obtener código del repositorio
         uses: actions/checkout@v4
 
       - name: Instalar Docker Compose
         run: |
-          sudo apt update
+          sudo apt update -y
           sudo apt install -y docker-compose-plugin
 
-      - name: Validar configuración de Docker Compose
+      - name: Verificar configuración de Docker Compose
         run: docker compose config
 
       - name: Construir imágenes
         run: docker compose build --no-cache
 
-      - name: Levantar los servicios
+      - name: Levantar servicios
         run: docker compose up -d
 
-      - name: Esperar que arranquen
-        run: sleep 15
+      - name: Esperar inicio completo
+        run: sleep 20
 
-      - name: Probar que el backend responda
-        run: curl --fail http://localhost:5000/api/mensaje
+      - name: Probar API del Backend
+        run: curl --connect-timeout 10 --retry 3 --retry-delay 3 http://localhost:5000/api/mensaje
 
-      - name: Probar que el frontend cargue
-        run: curl --fail http://localhost:8080
+      - name: Probar interfaz del Frontend
+        run: curl --connect-timeout 10 --retry 3 --retry-delay 3 http://localhost:8080
 
-      - name: Limpiar contenedores
+      - name: Limpiar recursos
         run: docker compose down
